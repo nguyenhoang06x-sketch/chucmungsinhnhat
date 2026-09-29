@@ -1,0 +1,2916 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday 🎂</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://i.postimg.cc/qvjz8QFW/Logo.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Outfit", sans-serif;
+  background: linear-gradient(135deg, #ffd8d0 0%, #ffe0cc 50%, #fff0d6 100%);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  overflow: hidden;
+  position: relative;
+}
+
+.password-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffccf9 0%, #f3ccff 50%, #d0e1ff 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+.password-content {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow: 0 20px 50px rgba(255, 105, 180, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 320px;
+  width: 92%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  gap: 8px;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+.pass-right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pass-gif {
+  width: 140px;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  transition: width 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .password-content {
+    flex-direction: row;
+    max-width: 700px;
+    padding: 40px;
+    gap: 40px;
+    max-height: none;
+  }
+
+  .pass-gif {
+    width: 280px;
+    margin-bottom: 0;
+  }
+
+  .pass-right-side {
+    flex: 1;
+  }
+}
+
+.pass-label {
+  color: #ff47a1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(255, 105, 180, 0.1);
+}
+
+.pass-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.birth-date-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #ff9bc4;
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  color: #7c4560;
+  font: inherit;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+.birth-date-input:focus {
+  border-color: #ff47a1;
+  box-shadow: 0 0 0 3px rgba(255, 71, 161, 0.14);
+}
+
+.pass-hint,
+.pass-message {
+  margin: 0;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.pass-hint {
+  color: #936b7d;
+}
+
+.pass-message {
+  min-height: 1.3em;
+  color: #d4467e;
+}
+
+.birth-date-input.shake-content {
+  animation: shake 0.5s ease-in-out;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid #ff47a1;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dot.active {
+  background: #ff47a1;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 71, 161, 0.5);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.key {
+  background: white;
+  border: none;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ff47a1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .key {
+    width: 65px;
+    height: 65px;
+    font-size: 1.8rem;
+  }
+}
+
+.key:active {
+  transform: scale(0.9);
+  background: #fff0f7;
+}
+
+.key.delete {
+  font-size: 1.4rem;
+  background: #fff0f7;
+}
+
+.key.empty {
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+.shake-content {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-10px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cake-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cake-scene {
+  width: min(600px, 94vw);
+  height: min(760px, 82vh);
+  min-height: 270px;
+  touch-action: none;
+  cursor: grab;
+}
+
+.cake-scene:active {
+  cursor: grabbing;
+}
+
+.cake-scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cloud-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.decor-cloud {
+  position: absolute;
+  overflow: visible;
+  filter: drop-shadow(0 5px 8px rgba(217, 104, 151, 0.16));
+  --bob-y-start: -10px;
+  --bob-y-end: 10px;
+}
+
+.cloud-white {
+  fill: #fff;
+  stroke: #ff6fae;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.cloud-white-top-left {
+  top: 5%;
+  left: -34px;
+  width: clamp(170px, 21vw, 280px);
+  --bob-y-start: -8px;
+  --bob-y-end: 8px;
+  animation: cloudBob 9s ease-in-out infinite alternate,
+    cloudFlyLeftToRight 48s linear infinite;
+  animation-delay: 0s, -7s;
+}
+
+.cloud-white-top-right {
+  top: 9%;
+  right: -38px;
+  width: clamp(180px, 23vw, 310px);
+  --bob-y-start: -12px;
+  --bob-y-end: 12px;
+  animation: cloudBob 12s ease-in-out infinite alternate,
+    cloudFlyRightToLeft 62s linear infinite;
+  animation-delay: 2s, -26s;
+}
+
+.cloud-white-side-left {
+  top: 43%;
+  left: -52px;
+  width: clamp(145px, 17vw, 235px);
+  --bob-y-start: -8px;
+  --bob-y-end: 8px;
+  animation: cloudBob 10s ease-in-out infinite alternate,
+    cloudFlyLeftToRight 68s linear infinite;
+  animation-delay: 4s, -41s;
+}
+
+.cloud-white-side-right {
+  top: 50%;
+  right: -48px;
+  width: clamp(140px, 16vw, 225px);
+  --bob-y-start: -11px;
+  --bob-y-end: 11px;
+  animation: cloudBob 8s ease-in-out infinite alternate,
+    cloudFlyRightToLeft 54s linear infinite;
+  animation-delay: 1s, -18s;
+}
+
+.pink-cloud-band {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  width: 112vw;
+  height: clamp(180px, 28vh, 320px);
+  overflow: visible;
+  --bob-y-start: -3px;
+  --bob-y-end: 3px;
+  animation: pinkCloudBob 20s ease-in-out infinite alternate,
+    cloudFlyLeftToRight 82s linear infinite;
+  animation-delay: 0s, -37s;
+}
+
+.cloud-bottom-fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: clamp(90px, 18vh, 180px);
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+@keyframes cloudBob {
+  from {
+    transform: translateY(var(--bob-y-start));
+  }
+
+  to {
+    transform: translateY(var(--bob-y-end));
+  }
+}
+
+@keyframes pinkCloudBob {
+  from {
+    transform: translateX(-50%) translateY(var(--bob-y-start));
+  }
+
+  to {
+    transform: translateX(-50%) translateY(var(--bob-y-end));
+  }
+}
+
+@keyframes cloudFlyLeftToRight {
+  from {
+    translate: -120vw 0;
+  }
+
+  to {
+    translate: 120vw 0;
+  }
+}
+
+@keyframes cloudFlyRightToLeft {
+  from {
+    translate: 120vw 0;
+  }
+
+  to {
+    translate: -120vw 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .cloud-white-side-left,
+  .cloud-white-side-right {
+    display: none;
+  }
+
+  .cloud-white-top-left {
+    top: 3%;
+    left: -42px;
+    width: 155px;
+    --bob-y-start: -4px;
+    --bob-y-end: 4px;
+  }
+
+  .cloud-white-top-right {
+    top: 8%;
+    right: -44px;
+    width: 165px;
+    --bob-y-start: -6px;
+    --bob-y-end: 6px;
+  }
+
+  .pink-cloud-band {
+    width: 120vw;
+    height: clamp(130px, 18vh, 170px);
+    bottom: -34px;
+    --bob-y-start: -1.5px;
+    --bob-y-end: 1.5px;
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-3deg) translateY(0);
+  }
+
+  to {
+    transform: rotate(3deg) translateY(-5px);
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.instruction {
+  color: #ff47a1;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.bounce-up {
+  animation: bounceUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bounceUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+.cake-container {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.celebration-item {
+  position: absolute;
+  bottom: -150px;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+  animation: floatUpNoRotate 8s linear forwards;
+}
+
+.photo-balloon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.photo-balloon-image {
+  position: absolute;
+  top: 39%;
+  left: 50%;
+  width: 68%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.photo-balloon-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 3000;
+  cursor: zoom-out;
+  animation: photoBalloonFadeIn 0.25s ease-out both;
+}
+
+.photo-balloon-expanded {
+  position: relative;
+  width: min(260px, 70vw);
+  height: min(355px, 80vh);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  animation: photoBalloonZoomIn 0.3s ease-out both;
+}
+
+.photo-balloon-expanded .photo-balloon-image {
+  border-width: 5px;
+}
+
+@keyframes photoBalloonFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes photoBalloonZoomIn {
+  from {
+    transform: scale(0.6);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.floating-emoji {
+  position: absolute;
+  bottom: -50px;
+  font-size: 2.5rem;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+  animation: floatUpNoRotate 6s ease-in forwards;
+}
+
+@keyframes floatUpNoRotate {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-125vh);
+    opacity: 0;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.letter-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 150vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  z-index: 120;
+  touch-action: manipulation;
+  transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.letter-container.show {
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.letter-container.split-pop {
+  transition: none;
+  will-change: left, top, transform, opacity;
+}
+
+.letter-container.opening {
+  pointer-events: none;
+}
+
+.letter-container.opening-complete {
+  opacity: 0 !important;
+  transition: opacity 0.18s ease-out;
+}
+
+.letter-envelope {
+  position: relative;
+  width: min(150px, 42vw);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  animation: floatingLetterCenter 3s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.letter-container.show .letter-envelope {
+  animation-play-state: running;
+}
+
+.letter-container.opening .letter-envelope {
+  animation-play-state: paused;
+}
+
+.letter-pop-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.letter-pop-glow {
+  position: absolute;
+  width: 30vmin;
+  height: 30vmin;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 220, 236, 0.7) 22%,
+    rgba(255, 176, 211, 0.28) 48%,
+    rgba(255, 176, 211, 0) 72%
+  );
+  transform: translate(-50%, -50%) scale(0.15);
+  animation: letterGlowBloom 0.95s ease-out forwards;
+}
+
+.letter-pop-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sparkle-color, #ffd36e);
+  box-shadow: 0 0 8px var(--sparkle-color, #ffd36e);
+  transform: translate(-50%, -50%);
+  animation: letterSparkleBurst 1s ease-out forwards;
+}
+
+@keyframes letterGlowBloom {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.15);
+  }
+
+  55% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+@keyframes letterSparkleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--sparkle-x)),
+      calc(-50% + var(--sparkle-y))
+    ) scale(0.15);
+  }
+}
+
+.letter-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+}
+
+.envelope-paper {
+  position: absolute;
+  z-index: 2;
+  top: 22%;
+  left: 34%;
+  width: 32%;
+  height: 52%;
+  border: 1px solid #e6d8c5;
+  border-radius: 2px;
+  background: #fffaf0;
+  color: #ff5c9a;
+  display: grid;
+  place-items: center;
+  font-size: 1.35rem;
+  opacity: 0;
+  transform: translateY(35%) scale(0.65);
+  transition:
+    opacity 0.32s ease-out 0.05s,
+    transform 0.44s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+}
+
+.envelope-flap {
+  position: absolute;
+  z-index: 3;
+  top: 17%;
+  left: 15%;
+  width: 70%;
+  height: 42%;
+  background: linear-gradient(145deg, #ffc4dc, #f391b8);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transform: rotateX(0);
+  backface-visibility: hidden;
+  transition: transform 0.36s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.letter-container.opening .envelope-flap {
+  transform: rotateX(170deg);
+}
+
+.letter-container.opening .envelope-paper {
+  opacity: 1;
+  transform: translateY(-34%) scale(1);
+}
+
+@keyframes floatingLetterCenter {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.message-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.64s ease-out,
+    visibility 0s linear 0.64s;
+}
+
+.message-modal.show {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.letter-paper {
+  background: #fdf5e6;
+  width: 100%;
+  max-width: min(92vw, 520px);
+  max-height: 90vh;
+  max-height: 90dvh;
+  box-sizing: border-box;
+  padding: 20px 22px 28px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #d4a373 #fdf5e6;
+  overscroll-behavior: contain;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border: 6px double #d4a373;
+  transform: scale(0.3);
+  transform-origin: var(--letter-origin-x, 50%) var(--letter-origin-y, 50%);
+  transition: transform 0.64s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: "Outfit", sans-serif;
+  color: #5d4037;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .letter-paper {
+    padding: 20px 22px 28px;
+    border: 8px double #d4a373;
+  }
+
+  .slideshow-viewport {
+    width: 160px;
+    height: 210px;
+  }
+}
+
+.message-modal.show .letter-paper {
+  transform: scale(1);
+}
+
+.letter-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: -20px -22px 8px;
+  padding: 12px 22px 0;
+  background: #fdf5e6;
+}
+
+.letter-paper h2 {
+  text-align: center;
+  color: #ff47a1;
+  font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+  line-height: 1.2;
+  margin: 0 28px 8px;
+}
+
+.letter-slideshow {
+  width: 100%;
+  margin: 0 auto 8px;
+}
+
+.slideshow-viewport {
+  position: relative;
+  width: 130px;
+  max-width: 100%;
+  height: 170px;
+  margin: 0 auto;
+}
+
+.slideshow-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border: 4px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.slideshow-image.active {
+  opacity: 1;
+}
+
+.slideshow-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 8px;
+}
+
+.slideshow-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d8c9c2;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.slideshow-dot.active {
+  background: #ff47a1;
+  transform: scale(1.25);
+}
+
+.slideshow-dot:focus-visible {
+  outline: 2px solid #5d4037;
+  outline-offset: 3px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  background: #fdf5e6;
+  font-size: 24px;
+  cursor: pointer;
+  color: #8d6e63;
+}
+
+.letter-message p {
+  margin: 0 0 0.6em;
+  font-size: clamp(0.85rem, 3.6vw, 1rem);
+  line-height: 1.55;
+}
+
+.letter-message p:last-child {
+  margin-bottom: 0;
+}
+
+.fireworks-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rocket {
+  position: absolute;
+  bottom: 0;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to top, transparent, #fff);
+  border-radius: 50% 50% 0 0;
+  filter: blur(0.5px);
+  animation: launch 1s ease-out forwards;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particle-explode 1.2s ease-out forwards;
+}
+
+@keyframes launch {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(calc(-1 * var(--target-height)));
+    opacity: 0;
+  }
+}
+
+@keyframes particle-explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+}
+
+    </style>
+  </head>
+
+  <body>
+    <div id="password-screen" class="password-screen">
+      <div class="password-content">
+        <img
+          src="https://i.pinimg.com/originals/8c/d0/61/8cd061f25177d38be9719798c5127a9f.gif"
+          alt="Cute GIF"
+          class="pass-gif"
+        />
+        <div class="pass-right-side">
+          <p class="pass-label">Nhập ngày sinh</p>
+          <div class="pass-input-wrapper">
+            <input
+              id="birth-date-input"
+              class="birth-date-input"
+              type="text"
+              inputmode="numeric"
+              autocomplete="bday"
+              maxlength="10"
+              placeholder="DD/MM/YYYY"
+              aria-label="Ngày sinh dạng ngày, tháng, năm"
+            />
+            <p class="pass-hint">Gợi ý: ngày sinh nhật của bà</p>
+            <p class="pass-message" id="pass-message" aria-live="polite"></p>
+          </div>
+          <div class="keypad">
+            <button class="key" data-value="1">1</button>
+            <button class="key" data-value="2">2</button>
+            <button class="key" data-value="3">3</button>
+            <button class="key" data-value="4">4</button>
+            <button class="key" data-value="5">5</button>
+            <button class="key" data-value="6">6</button>
+            <button class="key" data-value="7">7</button>
+            <button class="key" data-value="8">8</button>
+            <button class="key" data-value="9">9</button>
+            <button class="key empty"></button>
+            <button class="key" data-value="0">0</button>
+            <button class="key delete" id="key-del">⌫</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main-experience" style="display: none">
+      <div class="cloud-decor" aria-hidden="true">
+        <svg class="decor-cloud cloud-white cloud-white-top-left" viewBox="0 0 260 150">
+          <path d="M37 122C18 122 7 109 7 91c0-17 12-30 31-32 3-22 21-37 44-37 10-18 33-22 49-7 17-17 45-12 53 10 25-4 45 13 43 36 20 4 31 19 26 37-4 15-17 24-35 24H37Z" />
+        </svg>
+        <svg class="decor-cloud cloud-white cloud-white-top-right" viewBox="0 0 260 150">
+          <path d="M37 122C18 122 7 109 7 91c0-17 12-30 31-32 3-22 21-37 44-37 10-18 33-22 49-7 17-17 45-12 53 10 25-4 45 13 43 36 20 4 31 19 26 37-4 15-17 24-35 24H37Z" />
+        </svg>
+        <svg class="decor-cloud cloud-white cloud-white-side-left" viewBox="0 0 260 150">
+          <path d="M37 122C18 122 7 109 7 91c0-17 12-30 31-32 3-22 21-37 44-37 10-18 33-22 49-7 17-17 45-12 53 10 25-4 45 13 43 36 20 4 31 19 26 37-4 15-17 24-35 24H37Z" />
+        </svg>
+        <svg class="decor-cloud cloud-white cloud-white-side-right" viewBox="0 0 260 150">
+          <path d="M37 122C18 122 7 109 7 91c0-17 12-30 31-32 3-22 21-37 44-37 10-18 33-22 49-7 17-17 45-12 53 10 25-4 45 13 43 36 20 4 31 19 26 37-4 15-17 24-35 24H37Z" />
+        </svg>
+        <svg class="pink-cloud-band" viewBox="0 0 1440 360" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="pink-cloud-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f6a6c8" />
+              <stop offset="1" stop-color="#f9c9dd" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#pink-cloud-fill)" d="M0 190c61-2 79-35 124-35 26-54 96-64 139-23 47-48 127-30 143 30 63-8 112 21 119 67 60 1 84-30 129-29 26-62 105-71 148-26 42-43 120-34 147 19 63-17 113 12 124 58 52-20 67-65 126-61 48 3 68 49 103 51l57 2v117H0V190Z" />
+          <path fill="url(#pink-cloud-fill)" opacity="0.92" d="M0 265c61-7 84-39 137-31 32-39 94-37 119 4 54-8 89 24 91 61 51-4 70-27 113-21 36-48 109-41 133 6 50-13 95 19 96 57 57-8 71-41 116-37 44 4 60 40 97 45l-1 72H0v-156Z" />
+        </svg>
+        <div class="cloud-bottom-fade"></div>
+      </div>
+      <div class="floating-elements" id="floating-elements"></div>
+
+      <div class="container">
+        <div class="cake-container">
+          <div id="cake-clickable" class="cake-scene" aria-label="Bánh kem sinh nhật 3D"></div>
+        </div>
+        <p class="instruction" id="instruction-text">
+          Nhấn vào bánh để thắp nến
+        </p>
+      </div>
+
+      <div
+        class="letter-container"
+        id="letter-container"
+        role="button"
+        tabindex="0"
+        aria-label="Mở thư sinh nhật"
+      >
+        <div class="letter-envelope" aria-hidden="true">
+          <img src="asset/letter.png" alt="" class="letter-img" />
+          <span class="envelope-paper">♥</span>
+          <span class="envelope-flap"></span>
+        </div>
+      </div>
+
+      <div class="message-modal" id="message-modal">
+        <div class="fireworks-container" id="fireworks-container"></div>
+        <div class="letter-paper">
+          <div class="letter-header">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h2>Gửi bạn qua mạng! 🎂</h2>
+          </div>
+          <div class="letter-slideshow" aria-label="Ảnh kỷ niệm">
+            <div class="slideshow-viewport"></div>
+            <div class="slideshow-dots" aria-label="Chọn ảnh"></div>
+          </div>
+          <div class="letter-message">
+            <p>Chúc mừng sinh nhật bà nhé! 🎉</p>
+            <p>
+              Dù chúng mình quen nhau qua mạng, chưa gặp mặt ngoài đời lần nào,
+              nhưng tui vẫn thấy bà là một người bạn rất thật và rất đáng quý.
+              Cảm ơn bà đã luôn nhắn tin, tâm sự và làm những ngày bình thường
+              của tui vui hơn nhiều.
+            </p>
+            <p>
+              Chúc bà tuổi mới luôn vui vẻ, khỏe mạnh, xinh đẹp và gặt hái được
+              thật nhiều thành công. Mong mọi điều bà mong muốn đều sớm thành
+              hiện thực!
+            </p>
+            <p>
+              Hy vọng một ngày nào đó mình sẽ có dịp gặp nhau ngoài đời. Còn bây
+              giờ thì bà cứ tận hưởng ngày sinh nhật thật trọn vẹn nha!
+            </p>
+            <p>Sinh nhật vui nha bà, nhớ ăn bánh thật nhiều vào! 🍰✨</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bg-music" src="asset/sound/nhac.mp3" loop></audio>
+    <audio id="pop-sound" src="asset/sound/pop.mp3"></audio>
+    <audio id="candle-sound" src="asset/sound/candle.mp3"></audio>
+    <audio id="firework-sound" src="asset/sound/Firework.mp3"></audio>
+
+    <script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const BIRTH_DATE = "01/10/2010";
+const PHOTO_BALLOON_IMAGE = "asset/photos/8.jpg";
+const SHOW_CANDLE_BASE_CREAM = true;
+const PHOTO_POOL = Array.from({ length: 15 }, (_, i) => `asset/photos/${i + 1}.jpg`);
+const BOTTOM_FACE_IMAGE = "asset/photos/10.jpg";
+const BOTTOM_SEGMENTS = 8;
+const TOP_SEGMENTS = 6;
+const LETTER_PHOTOS = [
+  "asset/photos/3.jpg",
+  "asset/photos/6.jpg",
+  "asset/photos/8.jpg",
+  "asset/photos/9.jpg",
+  "asset/photos/10.jpg",
+];
+
+const BOTTOM_SPEED = 0.25;
+const TOP_SPEED = -0.35;
+const TIER_INDEPENDENT = true;
+const BOTTOM_RADIUS = 3.0975;
+const TOP_RADIUS = 2.2125;
+const FRAME_ASPECT = 0.5625; // width/height for each portrait frame
+const BOTTOM_HEIGHT = 2.636170212765957;
+const TOP_HEIGHT = 1.8989172261698304;
+const TRIM_COLOR = 0xf3e3c3;
+const FLAME_SCALE = 1.4;
+const CAKE_SCALE = 2.1;
+const SPLIT_DISTANCE = 1.1 * BOTTOM_RADIUS * CAKE_SCALE;
+const SPLIT_DURATION = 1.4;
+const HALF_FADE_DELAY = 0.6;
+const HALF_FADE_DURATION = 1.0;
+const LETTER_POP_DURATION = 1.2;
+const REMOVE_CAKE_AFTER_SPLIT = true;
+const HALF_FADE_EXTRA_DISTANCE = 0.35 * BOTTOM_RADIUS * CAKE_SCALE;
+const AUTO_OPEN_LETTER = true;
+const REJOIN_ON_CLOSE = false;
+const SHOW_CUT_FACE = true;
+const BOTTOM_PHOTOS = PHOTO_POOL.slice(0, BOTTOM_SEGMENTS);
+const TOP_PHOTOS = PHOTO_POOL.slice(BOTTOM_SEGMENTS, BOTTOM_SEGMENTS + TOP_SEGMENTS);
+
+let enteredPass = "";
+let passCheckTimeout = null;
+let passResetTimeout = null;
+const keys = document.querySelectorAll(".key[data-value]");
+const deleteKey = document.getElementById("key-del");
+const passwordScreen = document.getElementById("password-screen");
+const birthDateInput = document.getElementById("birth-date-input");
+const passMessage = document.getElementById("pass-message");
+const mainExperience = document.getElementById("main-experience");
+const cake = document.getElementById("cake-clickable");
+const cakeScene = createCakeScene(cake);
+
+function createCakeScene(mount) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  const controls = new OrbitControls(camera, renderer.domElement);
+  const cakeGroup = new THREE.Group();
+  cakeGroup.scale.setScalar(CAKE_SCALE);
+  const leftHalfGroup = new THREE.Group();
+  const rightHalfGroup = new THREE.Group();
+  cakeGroup.add(leftHalfGroup, rightHalfGroup);
+  const textureLoader = new THREE.TextureLoader();
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  let flameStartedAt = 0;
+  let interactionEnabled = true;
+  let tierRotationEnabled = true;
+  let previousFrameTime = null;
+  let isSplit = false;
+  let cakeOpacity = 1;
+  let halfFadeProgress = 0;
+  let halvesDisposed = false;
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.NoToneMapping;
+  renderer.toneMappingExposure = 1;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  mount.appendChild(renderer.domElement);
+
+  scene.add(new THREE.HemisphereLight(0xfff1d6, 0x9a7458, 0.8));
+  scene.add(new THREE.AmbientLight(0xfff1d6, 0.85));
+
+  const keyLight = new THREE.DirectionalLight(0xfff1d6, 2.3);
+  keyLight.position.set(-8, 14, 12);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.camera.left = -16;
+  keyLight.shadow.camera.right = 16;
+  keyLight.shadow.camera.top = 16;
+  keyLight.shadow.camera.bottom = -16;
+  keyLight.shadow.camera.near = 0.1;
+  keyLight.shadow.camera.far = 60;
+  keyLight.shadow.camera.updateProjectionMatrix();
+  scene.add(keyLight);
+
+  const cakeAccentLight = new THREE.PointLight(0xffb066, 4, 20, 2);
+  cakeAccentLight.position.set(
+    -BOTTOM_RADIUS * CAKE_SCALE * 0.65,
+    (BOTTOM_HEIGHT + TOP_HEIGHT) * CAKE_SCALE * 0.72,
+    BOTTOM_RADIUS * CAKE_SCALE * 1.2,
+  );
+  scene.add(cakeAccentLight);
+
+  const fillLight = new THREE.DirectionalLight(0xffb8cf, 0.45);
+  fillLight.position.set(4, 3, -5);
+  scene.add(fillLight);
+
+  const shadowPlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(200, 200),
+    new THREE.ShadowMaterial({ opacity: 0.14 }),
+  );
+  shadowPlane.rotation.x = -Math.PI / 2;
+  shadowPlane.position.y = -0.03;
+  shadowPlane.receiveShadow = true;
+  scene.add(shadowPlane);
+
+  scene.add(cakeGroup);
+
+  const fallbackMaterial = new THREE.MeshStandardMaterial({
+    color: 0xf3cbd4,
+    roughness: 0.76,
+  });
+  const trimMaterial = new THREE.MeshStandardMaterial({
+    color: TRIM_COLOR,
+    metalness: 0.2,
+    roughness: 0.4,
+  });
+
+  function addIcingRim(radius, y, halves) {
+    halves.forEach(({ group, faceThetaStart }) => {
+      const rim = new THREE.Mesh(
+        new THREE.RingGeometry(
+          radius - 0.025,
+          radius + 0.015,
+          64,
+          1,
+          faceThetaStart,
+          Math.PI,
+        ),
+        trimMaterial,
+      );
+      rim.rotation.x = -Math.PI / 2;
+      rim.position.y = y;
+      rim.castShadow = true;
+      group.add(rim);
+    });
+  }
+
+  function addIcingEdgeTrim(radius, y, tubeRadius, halves) {
+    const geometry = new THREE.TorusGeometry(radius - tubeRadius, tubeRadius, 8, 48, Math.PI);
+    halves.forEach(({ group, thetaStart }) => {
+      const trim = new THREE.Mesh(geometry, trimMaterial);
+      trim.rotation.x = thetaStart === 0 ? Math.PI / 2 : -Math.PI / 2;
+      trim.position.y = y;
+      trim.castShadow = true;
+      trim.receiveShadow = true;
+      group.add(trim);
+    });
+  }
+
+  function addPhotoFace(geometry, path, y, rotationX, tier) {
+    const materials = [];
+    tier.halves.forEach(({ group, faceThetaStart }) => {
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xf3cbd4,
+        roughness: 0.9,
+      });
+      const face = new THREE.Mesh(geometry(faceThetaStart), material);
+      face.rotation.x = rotationX;
+      face.position.y = y;
+      group.add(face);
+      materials.push(material);
+    });
+
+    try {
+      textureLoader.load(
+        path,
+        (texture) => {
+          try {
+            const width = texture.image.width;
+            const height = texture.image.height;
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            texture.wrapS = THREE.ClampToEdgeWrapping;
+            texture.wrapT = THREE.ClampToEdgeWrapping;
+            texture.repeat.set(1, 1);
+            texture.offset.set(0, 0);
+
+            if (height > width) {
+              texture.repeat.y = width / height;
+              texture.offset.y = 1 - texture.repeat.y;
+            } else if (width > height) {
+              texture.repeat.x = height / width;
+              texture.offset.x = (1 - texture.repeat.x) / 2;
+            }
+
+            materials.forEach((material) => {
+              material.map = texture;
+              material.color.set(0xffffff);
+              material.needsUpdate = true;
+            });
+          } catch (error) {
+            texture.dispose();
+            console.warn(`Cake face photo could not be applied: ${path}`, error);
+          }
+        },
+        undefined,
+        () => console.warn(`Cake face photo could not be loaded: ${path}`),
+      );
+    } catch (error) {
+      console.warn(`Cake face photo could not be loaded: ${path}`, error);
+    }
+
+  }
+
+  function makeTier(radius, baseY, height, segmentCount, photoPaths) {
+    const tierGroup = new THREE.Group();
+    const halfA = new THREE.Group();
+    const halfB = new THREE.Group();
+    const halves = [
+      { group: halfA, thetaStart: 0, faceThetaStart: -Math.PI / 2, direction: 1 },
+      { group: halfB, thetaStart: Math.PI, faceThetaStart: Math.PI / 2, direction: -1 },
+    ];
+    leftHalfGroup.add(halfA);
+    rightHalfGroup.add(halfB);
+    cakeGroup.add(tierGroup);
+    const tier = { group: tierGroup, halves };
+
+    const angleStep = (Math.PI * 2) / segmentCount;
+    const thetaLength = angleStep - 0.02;
+    const segWidth = radius * thetaLength;
+    const frameAspect = segWidth / height;
+    const topY = baseY + height;
+
+    halves.forEach(({ group, thetaStart }, halfIndex) => {
+      const cakeCore = new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          radius - 0.001,
+          radius - 0.001,
+          height,
+          64,
+          1,
+          true,
+          thetaStart,
+          Math.PI,
+        ),
+        fallbackMaterial,
+      );
+      cakeCore.position.y = baseY + height / 2;
+      cakeCore.castShadow = true;
+      cakeCore.receiveShadow = true;
+      group.add(cakeCore);
+
+      if (SHOW_CUT_FACE) {
+        const cutTextureCanvas = document.createElement("canvas");
+        cutTextureCanvas.width = 64;
+        cutTextureCanvas.height = 256;
+        const cutContext = cutTextureCanvas.getContext("2d");
+        const layerHeight = cutTextureCanvas.height / 5;
+        cutContext.fillStyle = "#fde9c9";
+        cutContext.fillRect(0, 0, cutTextureCanvas.width, cutTextureCanvas.height);
+        [1, 3].forEach((layer) => {
+          cutContext.fillStyle = layer === 1 ? "#fff7ee" : "#f7b6c8";
+          cutContext.fillRect(
+            0,
+            layer * layerHeight,
+            cutTextureCanvas.width,
+            layerHeight * 0.42,
+          );
+        });
+        const cutTexture = new THREE.CanvasTexture(cutTextureCanvas);
+        cutTexture.colorSpace = THREE.SRGBColorSpace;
+        cutTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        const cutFace = new THREE.Mesh(
+          new THREE.PlaneGeometry(radius * 2, height),
+          new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            map: cutTexture,
+            roughness: 0.9,
+            side: THREE.DoubleSide,
+          }),
+        );
+        cutFace.rotation.y = Math.PI / 2;
+        cutFace.position.set(halfIndex === 0 ? -0.01 : 0.01, baseY + height / 2, 0);
+        cutFace.castShadow = true;
+        cutFace.receiveShadow = true;
+        group.add(cutFace);
+      }
+    });
+
+    for (let index = 0; index < segmentCount; index++) {
+      const half = halves[index < segmentCount / 2 ? 0 : 1].group;
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xf3cbd4,
+        roughness: 0.76,
+      });
+      const segment = new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          radius,
+          radius,
+          height,
+          24,
+          1,
+          true,
+          index * angleStep + 0.01,
+          thetaLength,
+        ),
+        material,
+      );
+      segment.position.y = baseY + height / 2;
+      segment.castShadow = true;
+      segment.receiveShadow = true;
+      half.add(segment);
+
+      try {
+        textureLoader.load(
+          photoPaths[index],
+          (texture) => {
+            try {
+              const imgAspect = texture.image.width / texture.image.height;
+              texture.colorSpace = THREE.SRGBColorSpace;
+              texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+              texture.wrapS = THREE.ClampToEdgeWrapping;
+              texture.wrapT = THREE.ClampToEdgeWrapping;
+              texture.repeat.set(1, 1);
+              texture.offset.set(0, 0);
+
+              if (imgAspect > frameAspect) {
+                texture.repeat.x = frameAspect / imgAspect;
+                texture.offset.x = (1 - texture.repeat.x) / 2;
+              } else {
+                texture.repeat.y = imgAspect / frameAspect;
+                texture.offset.y = 1 - texture.repeat.y;
+              }
+
+              material.map = texture;
+              material.color.set(0xffffff);
+              material.needsUpdate = true;
+            } catch (error) {
+              texture.dispose();
+              console.warn(`Cake photo could not be applied: ${photoPaths[index]}`, error);
+            }
+          },
+          undefined,
+          () => console.warn(`Cake photo could not be loaded: ${photoPaths[index]}`),
+        );
+      } catch (error) {
+        console.warn(`Cake photo could not be loaded: ${photoPaths[index]}`, error);
+      }
+    }
+
+    const trimTubeRadius = height * 0.018;
+    addIcingRim(radius, topY + 0.014, halves);
+    addIcingRim(radius, baseY + 0.025, halves);
+    addIcingEdgeTrim(radius, topY - trimTubeRadius, trimTubeRadius, halves);
+    addIcingEdgeTrim(radius, baseY + trimTubeRadius, trimTubeRadius, halves);
+
+    return { ...tier, segmentCount, height, topY };
+  }
+
+  const tierBottom = makeTier(BOTTOM_RADIUS, 0, BOTTOM_HEIGHT, BOTTOM_SEGMENTS, BOTTOM_PHOTOS);
+  const tierTop = makeTier(TOP_RADIUS, tierBottom.topY, TOP_HEIGHT, TOP_SEGMENTS, TOP_PHOTOS);
+  const cakeTiers = [tierBottom, tierTop];
+  const getHalfEntries = () => [
+    { group: leftHalfGroup, direction: 1 },
+    { group: rightHalfGroup, direction: -1 },
+  ];
+  function setTierRotation(tier, rotationY) {
+    tier.group.rotation.y = rotationY;
+    tier.halves.forEach(({ group }) => {
+      group.rotation.y = rotationY;
+    });
+  }
+  const cakeHeight = tierBottom.height + tierTop.height;
+
+  addPhotoFace(
+    (thetaStart) => new THREE.RingGeometry(TOP_RADIUS, BOTTOM_RADIUS, 64, 1, thetaStart, Math.PI),
+    PHOTO_POOL[0],
+    tierBottom.topY + 0.012,
+    -Math.PI / 2,
+    tierBottom,
+  );
+  addPhotoFace(
+    (thetaStart) => new THREE.CircleGeometry(TOP_RADIUS, 64, thetaStart, Math.PI),
+    PHOTO_POOL[14],
+    tierTop.topY + 0.012,
+    -Math.PI / 2,
+    tierTop,
+  );
+  addPhotoFace(
+    (thetaStart) => new THREE.CircleGeometry(BOTTOM_RADIUS, 64, thetaStart, Math.PI),
+    BOTTOM_FACE_IMAGE,
+    -0.012,
+    Math.PI / 2,
+    tierBottom,
+  );
+
+  const candleGroup = new THREE.Group();
+  const cakeTop = tierTop.topY + 0.012;
+  const candleScaleFactor = TOP_RADIUS / 1.1;
+  const candleRadius = 0.15 * candleScaleFactor;
+  const candleDiameter = (2 * TOP_RADIUS) / 6;
+  const candleHeight = 1.6 * candleDiameter;
+  candleGroup.position.set(0, cakeTop + candleHeight / 2 - 0.05 * candleScaleFactor, 0);
+  candleGroup.visible = true;
+  tierTop.group.add(candleGroup);
+
+  const candleBodyBottom = -candleHeight / 2;
+  const candleBodyTop = candleBodyBottom + candleHeight;
+
+  const stripeCanvas = document.createElement("canvas");
+  stripeCanvas.width = 256;
+  stripeCanvas.height = 256;
+  const stripeContext = stripeCanvas.getContext("2d");
+  const stripePixels = stripeContext.createImageData(stripeCanvas.width, stripeCanvas.height);
+  const stripeColors = [
+    [255, 247, 238],
+    [255, 126, 182],
+    [255, 194, 220],
+  ];
+  for (let y = 0; y < stripeCanvas.height; y++) {
+    for (let x = 0; x < stripeCanvas.width; x++) {
+      const phase = (x + y) % 64;
+      const color = phase < 18 ? stripeColors[1] : phase >= 34 && phase < 48 ? stripeColors[2] : stripeColors[0];
+      const index = (y * stripeCanvas.width + x) * 4;
+      stripePixels.data[index] = color[0];
+      stripePixels.data[index + 1] = color[1];
+      stripePixels.data[index + 2] = color[2];
+      stripePixels.data[index + 3] = 255;
+    }
+  }
+  stripeContext.putImageData(stripePixels, 0, 0);
+  const stripeTexture = new THREE.CanvasTexture(stripeCanvas);
+  stripeTexture.colorSpace = THREE.SRGBColorSpace;
+  stripeTexture.wrapS = THREE.RepeatWrapping;
+  stripeTexture.wrapT = THREE.RepeatWrapping;
+  stripeTexture.repeat.set(1, 1);
+  stripeTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+  const candleMaterial = new THREE.MeshStandardMaterial({
+    map: stripeTexture,
+    color: 0xffffff,
+    roughness: 0.35,
+    metalness: 0.04,
+    emissive: 0xffd7e8,
+    emissiveIntensity: 0.08,
+  });
+  const candleBody = new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      candleRadius * 0.94,
+      candleRadius,
+      candleHeight,
+      40,
+      1,
+      false,
+    ),
+    candleMaterial,
+  );
+  candleBody.position.y = candleBodyBottom + candleHeight / 2;
+  candleBody.castShadow = true;
+  candleBody.receiveShadow = true;
+  candleGroup.add(candleBody);
+
+  if (SHOW_CANDLE_BASE_CREAM) {
+    const candleBaseCreamMaterial = new THREE.MeshStandardMaterial({
+      color: 0xffd9e6,
+      roughness: 0.6,
+    });
+    const creamBallRadius = candleRadius * 0.35;
+    const creamRingRadius = candleRadius * 1.1;
+
+    for (let index = 0; index < 8; index++) {
+      const sizeVariation = 0.9 + Math.random() * 0.2;
+      const angle = (index / 8) * Math.PI * 2 + (Math.random() - 0.5) * 0.12;
+      const creamBall = new THREE.Mesh(
+        new THREE.SphereGeometry(creamBallRadius, 18, 14),
+        candleBaseCreamMaterial,
+      );
+      const verticalScale = 0.7 * sizeVariation;
+      const verticalRadius = creamBallRadius * verticalScale;
+      creamBall.scale.set(sizeVariation, verticalScale, sizeVariation);
+      creamBall.position.set(
+        Math.cos(angle) * creamRingRadius,
+        cakeTop - candleGroup.position.y + verticalRadius * (0.9 + Math.random() * 0.2),
+        Math.sin(angle) * creamRingRadius,
+      );
+      creamBall.castShadow = true;
+      creamBall.receiveShadow = true;
+      candleGroup.add(creamBall);
+    }
+
+    const centerCream = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 24, 18),
+      candleBaseCreamMaterial,
+    );
+    centerCream.scale.set(candleRadius * 1.08, candleRadius * 0.38, candleRadius * 1.08);
+    centerCream.position.y =
+      cakeTop - candleGroup.position.y + candleRadius * 0.38 * 0.95;
+    centerCream.castShadow = true;
+    centerCream.receiveShadow = true;
+    candleGroup.add(centerCream);
+  }
+
+  const waxMaterial = new THREE.MeshStandardMaterial({
+    color: 0xfff7ee,
+    roughness: 0.55,
+    emissive: 0xffe2ec,
+    emissiveIntensity: 0.035,
+  });
+  const waxPool = new THREE.Mesh(
+    new THREE.CircleGeometry(candleRadius * 0.92, 32),
+    waxMaterial,
+  );
+  waxPool.rotation.x = -Math.PI / 2;
+  waxPool.position.y = candleBodyTop - 0.012;
+  candleGroup.add(waxPool);
+
+  const waxEdge = new THREE.Mesh(
+    new THREE.TorusGeometry(candleRadius * 0.9, 0.012 * candleScaleFactor, 8, 32),
+    waxMaterial,
+  );
+  waxEdge.rotation.x = Math.PI / 2;
+  waxEdge.position.y = candleBodyTop - 0.003;
+  candleGroup.add(waxEdge);
+
+  const dripMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffd9e7,
+    roughness: 0.42,
+    emissive: 0xffd7e8,
+    emissiveIntensity: 0.05,
+  });
+  [0.35, 2.55, 4.7].forEach((angle, index) => {
+    const drip = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), dripMaterial);
+    const dripHeight = candleHeight * (index === 1 ? 0.13 : 0.085);
+    drip.scale.set(candleRadius * 0.23, dripHeight, candleRadius * 0.23);
+    drip.position.set(
+      Math.cos(angle) * candleRadius * 0.88,
+      candleBodyTop - dripHeight * 0.9,
+      Math.sin(angle) * candleRadius * 0.88,
+    );
+    candleGroup.add(drip);
+  });
+
+  const wickMaterial = new THREE.MeshStandardMaterial({
+    color: 0x51413d,
+    roughness: 0.92,
+  });
+  const wickHeight = 0.16 * candleScaleFactor;
+  const wickCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, -wickHeight / 2, 0),
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0, wickHeight / 2, 0),
+  ]);
+  const wick = new THREE.Mesh(
+    new THREE.TubeGeometry(wickCurve, 12, 0.012 * candleScaleFactor, 8, false),
+    wickMaterial,
+  );
+  wick.position.set(0, candleBodyTop, 0);
+  wick.rotation.set(0, 0, 0);
+  candleGroup.add(wick);
+
+  const flameGroup = new THREE.Group();
+  flameGroup.position.set(
+    0,
+    candleHeight / 2 + wickHeight / 2 + 0.06 * candleScaleFactor,
+    0,
+  );
+  flameGroup.rotation.set(0, 0, 0);
+  flameGroup.visible = false;
+  candleGroup.add(flameGroup);
+
+  function createFlameTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 128;
+    canvas.height = 192;
+    const context = canvas.getContext("2d");
+    const gradient = context.createRadialGradient(64, 112, 4, 64, 96, 86);
+    gradient.addColorStop(0, "rgba(255,255,248,1)");
+    gradient.addColorStop(0.26, "rgba(255,238,142,1)");
+    gradient.addColorStop(0.58, "rgba(255,132,30,0.92)");
+    gradient.addColorStop(0.82, "rgba(239,65,20,0.74)");
+    gradient.addColorStop(1, "rgba(215,38,18,0)");
+    context.fillStyle = gradient;
+    context.beginPath();
+    context.moveTo(64, 8);
+    context.bezierCurveTo(86, 36, 104, 73, 104, 112);
+    context.bezierCurveTo(104, 151, 84, 184, 64, 184);
+    context.bezierCurveTo(44, 184, 24, 151, 24, 112);
+    context.bezierCurveTo(24, 73, 42, 36, 64, 8);
+    context.closePath();
+    context.fill();
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return texture;
+  }
+
+  function createGlowTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 128;
+    canvas.height = 128;
+    const context = canvas.getContext("2d");
+    const gradient = context.createRadialGradient(64, 64, 2, 64, 64, 62);
+    gradient.addColorStop(0, "rgba(255,249,210,1)");
+    gradient.addColorStop(0.25, "rgba(255,190,82,0.58)");
+    gradient.addColorStop(1, "rgba(255,133,37,0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 128, 128);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }
+
+  const flameMaterial = new THREE.SpriteMaterial({
+    map: createFlameTexture(),
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const flameSprite = new THREE.Sprite(flameMaterial);
+  flameSprite.position.set(0, 0, 0);
+  flameSprite.rotation.set(0, 0, 0);
+  flameSprite.center.set(0.5, 0.5);
+  flameSprite.scale.set(
+    0.31 * candleScaleFactor * FLAME_SCALE,
+    0.49 * candleScaleFactor * FLAME_SCALE,
+    1,
+  );
+  flameGroup.add(flameSprite);
+
+  const glowMaterial = new THREE.SpriteMaterial({
+    map: createGlowTexture(),
+    color: 0xffc267,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const flameGlow = new THREE.Sprite(glowMaterial);
+  flameGlow.position.set(0, 0, 0);
+  flameGlow.rotation.set(0, 0, 0);
+  flameGlow.center.set(0.5, 0.5);
+  flameGlow.scale.set(0.72 * candleScaleFactor * 1.5, 0.72 * candleScaleFactor * 1.5, 1);
+  flameGroup.add(flameGlow);
+
+  const flameLight = new THREE.PointLight(0xffb347, 0, 2.4 * candleScaleFactor);
+  flameLight.position.set(0, 0, 0);
+  flameGroup.add(flameLight);
+
+  let flameOpacity = 0;
+  let flameOpacityStart = 0;
+  let flameOpacityTarget = 0;
+  let flameOpacityElapsed = 0;
+  let flameOpacityDuration = 0.3;
+  const smokeParticles = [];
+  const smokeCanvas = document.createElement("canvas");
+  smokeCanvas.width = 64;
+  smokeCanvas.height = 64;
+  const smokeContext = smokeCanvas.getContext("2d");
+  const smokeGradient = smokeContext.createRadialGradient(32, 32, 1, 32, 32, 30);
+  smokeGradient.addColorStop(0, "rgba(205,196,200,0.45)");
+  smokeGradient.addColorStop(0.5, "rgba(180,171,176,0.22)");
+  smokeGradient.addColorStop(1, "rgba(160,150,155,0)");
+  smokeContext.fillStyle = smokeGradient;
+  smokeContext.fillRect(0, 0, 64, 64);
+  const smokeTexture = new THREE.CanvasTexture(smokeCanvas);
+  smokeTexture.colorSpace = THREE.SRGBColorSpace;
+
+  const candleHitboxBottom = candleBodyBottom - 0.02;
+  const candleHitboxTop = candleBodyTop + 0.62 * candleScaleFactor;
+  const candleHitboxHeight = candleHitboxTop - candleHitboxBottom;
+  const candleHitbox = new THREE.Mesh(
+    new THREE.CylinderGeometry(candleRadius * 1.8, candleRadius * 1.9, candleHitboxHeight, 20),
+    new THREE.MeshBasicMaterial({
+      transparent: true,
+      opacity: 0,
+      colorWrite: false,
+      depthWrite: false,
+    }),
+  );
+  candleHitbox.position.y = (candleHitboxTop + candleHitboxBottom) / 2;
+  candleGroup.add(candleHitbox);
+
+  const visibleCakeHeight = (cakeHeight + candleHeight + 0.4 * candleScaleFactor) * CAKE_SCALE;
+  const targetY = visibleCakeHeight / 2;
+  const cameraElevation = THREE.MathUtils.degToRad(23);
+  const cameraTanHalfFov = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const targetHeightFill = 0.88;
+  const targetWidthFill = 0.84;
+
+  function getCameraDistance(splitView = isSplit) {
+    const aspect = Math.max(camera.aspect, 0.1);
+    const cakeWidth = splitView
+      ? 2 * (BOTTOM_RADIUS * CAKE_SCALE + SPLIT_DISTANCE)
+      : 2 * BOTTOM_RADIUS * CAKE_SCALE;
+    const projectedCakeHeight =
+      visibleCakeHeight * Math.cos(cameraElevation) +
+      2 * BOTTOM_RADIUS * CAKE_SCALE * Math.sin(cameraElevation);
+    const heightDistance = projectedCakeHeight / (2 * cameraTanHalfFov * targetHeightFill);
+    const widthDistance = cakeWidth / (2 * cameraTanHalfFov * aspect * targetWidthFill);
+    return Math.max(heightDistance, widthDistance);
+  }
+
+  function cameraPositionAtDistance(distance, azimuth) {
+    const horizontalDistance = distance * Math.cos(cameraElevation);
+    return new THREE.Vector3(
+      Math.sin(azimuth) * horizontalDistance,
+      targetY + distance * Math.sin(cameraElevation),
+      Math.cos(azimuth) * horizontalDistance,
+    );
+  }
+
+  controls.target.set(0, targetY, 0);
+  camera.position.copy(cameraPositionAtDistance(getCameraDistance(false), 0));
+  controls.enableRotate = true;
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.enableDamping = true;
+  controls.autoRotate = false;
+  controls.minPolarAngle = 0;
+  controls.maxPolarAngle = Math.PI;
+  controls.update();
+
+  function tween(duration, update, complete) {
+    const startedAt = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 2);
+      update(eased);
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else if (complete) {
+        complete();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function projectCakeCenter() {
+    cakeGroup.updateMatrixWorld(true);
+    camera.updateMatrixWorld();
+    const center = cakeGroup.localToWorld(
+      new THREE.Vector3(0, targetY / CAKE_SCALE, 0),
+    );
+    center.project(camera);
+    return {
+      x: ((center.x + 1) / 2) * window.innerWidth,
+      y: ((1 - center.y) / 2) * window.innerHeight,
+    };
+  }
+
+  function projectSplitGapCenter() {
+    cakeGroup.updateMatrixWorld(true);
+    camera.updateMatrixWorld();
+    const gapCenter = leftHalfGroup.position.clone()
+      .add(rightHalfGroup.position)
+      .multiplyScalar(0.5);
+    gapCenter.y = targetY / CAKE_SCALE;
+    const center = cakeGroup.localToWorld(gapCenter);
+    center.project(camera);
+    return {
+      x: ((center.x + 1) / 2) * window.innerWidth,
+      y: ((1 - center.y) / 2) * window.innerHeight,
+    };
+  }
+
+  function fadeAndDisposeHalves() {
+    if (halvesDisposed) return;
+    const halves = getHalfEntries().map(({ group, direction }) => ({
+      group,
+      direction,
+      startPosition: group.position.clone(),
+      startScale: group.scale.x,
+    }));
+
+    halves.forEach(({ group }) => {
+      group.traverse((object) => {
+        if (!object.isMesh) return;
+        const materials = Array.isArray(object.material)
+          ? object.material
+          : [object.material];
+        materials.forEach((material) => {
+          material.transparent = true;
+          material.depthWrite = false;
+          material.needsUpdate = true;
+        });
+      });
+    });
+    candleGroup.traverse((object) => {
+      if (!object.isMesh && !object.isSprite) return;
+      const materials = Array.isArray(object.material)
+        ? object.material
+        : [object.material];
+      materials.forEach((material) => {
+        material.transparent = true;
+        material.depthWrite = false;
+        material.needsUpdate = true;
+      });
+    });
+
+    tween(HALF_FADE_DURATION * 1000, (progress) => {
+      halfFadeProgress = progress;
+      halves.forEach(({ group, direction, startPosition, startScale }) => {
+        group.position.x =
+          startPosition.x + direction * (HALF_FADE_EXTRA_DISTANCE / CAKE_SCALE) * progress;
+        group.scale.setScalar(startScale * (1 - 0.15 * progress));
+        group.traverse((object) => {
+          if (!object.isMesh) return;
+          const materials = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+          materials.forEach((material) => {
+            material.opacity = cakeOpacity * (1 - progress);
+          });
+        });
+      });
+      candleGroup.traverse((object) => {
+        if (!object.isMesh && !object.isSprite) return;
+        const materials = Array.isArray(object.material)
+          ? object.material
+          : [object.material];
+        materials.forEach((material) => {
+          material.opacity = cakeOpacity * (1 - progress);
+        });
+      });
+    }, () => {
+      if (!REMOVE_CAKE_AFTER_SPLIT) return;
+
+      const geometries = new Set();
+      const materials = new Set();
+      const textures = new Set();
+      halves.forEach(({ group }) => {
+        group.visible = false;
+        group.traverse((object) => {
+          if (!object.isMesh) return;
+          if (object.geometry) geometries.add(object.geometry);
+          const objectMaterials = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+          objectMaterials.forEach((material) => {
+            materials.add(material);
+            Object.values(material).forEach((value) => {
+              if (value?.isTexture) textures.add(value);
+            });
+          });
+        });
+      });
+      candleGroup.visible = false;
+      candleGroup.traverse((object) => {
+        if (!object.isMesh && !object.isSprite) return;
+        if (object.geometry) geometries.add(object.geometry);
+        const objectMaterials = Array.isArray(object.material)
+          ? object.material
+          : [object.material];
+        objectMaterials.forEach((material) => {
+          materials.add(material);
+          Object.values(material).forEach((value) => {
+            if (value?.isTexture) textures.add(value);
+          });
+        });
+      });
+
+      geometries.forEach((geometry) => geometry.dispose());
+      textures.forEach((texture) => texture.dispose());
+      materials.forEach((material) => material.dispose());
+      halvesDisposed = true;
+    });
+  }
+
+  function startSplit(onSplitStarted, onLetterReveal, onSplitComplete) {
+    interactionEnabled = false;
+    controls.autoRotate = false;
+    controls.enabled = false;
+    controls.enableDamping = false;
+    tierRotationEnabled = false;
+    const cameraAzimuth = controls.getAzimuthalAngle();
+    const shortestAngleDelta = (from, to) =>
+      Math.atan2(Math.sin(to - from), Math.cos(to - from));
+    const tierStartAngles = cakeTiers.map((tier) => tier.group.rotation.y);
+    const commonTierAngle = [0, Math.PI].reduce((bestAngle, candidate) => {
+      const candidateCost = cakeTiers.reduce(
+        (sum, tier) => sum + Math.abs(shortestAngleDelta(tier.group.rotation.y, candidate)),
+        0,
+      );
+      const bestCost = cakeTiers.reduce(
+        (sum, tier) => sum + Math.abs(shortestAngleDelta(tier.group.rotation.y, bestAngle)),
+        0,
+      );
+      return candidateCost < bestCost ? candidate : bestAngle;
+    }, 0);
+    const tierTargetAngles = cakeTiers.map(() => commonTierAngle);
+    const tierRotationDeltas = tierStartAngles.map((startAngle, index) =>
+      shortestAngleDelta(startAngle, tierTargetAngles[index]),
+    );
+    const startRotation = cakeGroup.rotation.y;
+    const targetRootRotation = cameraAzimuth - tierTargetAngles[0];
+    const rootRotationDelta = shortestAngleDelta(startRotation, targetRootRotation);
+    isSplit = true;
+    const startCameraPosition = camera.position.clone();
+    const splitCameraPosition = cameraPositionAtDistance(
+      getCameraDistance(true),
+      cameraAzimuth,
+    );
+    const startTarget = controls.target.clone();
+    const splitTarget = new THREE.Vector3(0, targetY, 0);
+    tween(800, (progress) => {
+      cakeGroup.rotation.y = startRotation + rootRotationDelta * progress;
+      cakeTiers.forEach((tier, index) => {
+        setTierRotation(tier, tierStartAngles[index] + tierRotationDeltas[index] * progress);
+      });
+      camera.position.lerpVectors(startCameraPosition, splitCameraPosition, progress);
+      controls.target.lerpVectors(startTarget, splitTarget, progress);
+      camera.lookAt(controls.target);
+    }, () => {
+      cakeGroup.updateMatrixWorld(true);
+      cakeGroup.attach(candleGroup);
+      const halves = getHalfEntries().map(({ group, direction }) => ({
+        group,
+        direction,
+        startPosition: group.position.clone(),
+      }));
+      onSplitStarted();
+      onLetterReveal(projectSplitGapCenter());
+      if (REMOVE_CAKE_AFTER_SPLIT) {
+        setTimeout(fadeAndDisposeHalves, HALF_FADE_DELAY * 1000);
+      }
+
+      tween(SPLIT_DURATION * 1000, (progress) => {
+        halves.forEach(({ group, direction, startPosition }) => {
+          group.position.x = startPosition.x + direction * (SPLIT_DISTANCE / CAKE_SCALE) * progress;
+        });
+      }, () => {
+        if (onSplitComplete) onSplitComplete();
+      });
+    });
+  }
+
+  function setCakeOpacity(opacity) {
+    cakeOpacity = opacity;
+    getHalfEntries().forEach(({ group }) => {
+      group.traverse((object) => {
+        if (!object.isMesh) return;
+        const materials = Array.isArray(object.material)
+          ? object.material
+          : [object.material];
+        materials.forEach((material) => {
+          material.transparent = opacity < 1 || halfFadeProgress > 0;
+          material.opacity = opacity * (1 - halfFadeProgress);
+          material.depthWrite = opacity >= 1 && halfFadeProgress === 0;
+          material.needsUpdate = true;
+        });
+      });
+    });
+  }
+
+  function rejoin() {
+    if (halvesDisposed) return;
+    const halves = getHalfEntries().map(({ group }) => ({
+      group,
+      startPosition: group.position.clone(),
+      startRotationY: group.rotation.y,
+      startRotationZ: group.rotation.z,
+    }));
+    const startRotation = cakeGroup.rotation.y;
+    const cameraAzimuth = controls.getAzimuthalAngle();
+    const startCameraPosition = camera.position.clone();
+    const rejoinedCameraPosition = cameraPositionAtDistance(
+      getCameraDistance(false),
+      cameraAzimuth,
+    );
+    const rotationDelta = Math.atan2(Math.sin(-startRotation), Math.cos(-startRotation));
+
+    tween(700, (progress) => {
+      halves.forEach(({ group, startPosition, startRotationY, startRotationZ }) => {
+        group.position.x = startPosition.x * (1 - progress);
+        group.rotation.y = startRotationY * (1 - progress);
+        group.rotation.z = startRotationZ * (1 - progress);
+      });
+      cakeGroup.rotation.y = startRotation + rotationDelta * progress;
+      camera.position.lerpVectors(startCameraPosition, rejoinedCameraPosition, progress);
+      camera.lookAt(controls.target);
+    }, () => {
+      isSplit = false;
+      tierRotationEnabled = true;
+      controls.enableDamping = true;
+      controls.enabled = true;
+      controls.autoRotate = false;
+      tierTop.group.attach(candleGroup);
+    });
+  }
+
+  function resize() {
+    const bounds = mount.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+    const azimuth = controls.getAzimuthalAngle();
+    camera.aspect = bounds.width / bounds.height;
+    camera.updateProjectionMatrix();
+    camera.position.copy(cameraPositionAtDistance(getCameraDistance(), azimuth));
+    controls.target.set(0, targetY, 0);
+    renderer.setSize(bounds.width, bounds.height, false);
+    controls.update();
+  }
+
+  function lightCandle() {
+    candleGroup.visible = true;
+    wickMaterial.color.set(0x51413d);
+    flameGroup.visible = true;
+    flameOpacityStart = flameOpacity;
+    flameOpacityTarget = 1;
+    flameOpacityElapsed = 0;
+    flameOpacityDuration = 0.3;
+    flameStartedAt = performance.now();
+  }
+
+  function extinguishCandle() {
+    flameOpacityStart = flameOpacity;
+    flameOpacityTarget = 0;
+    flameOpacityElapsed = 0;
+    flameOpacityDuration = 0.3;
+    wickMaterial.color.set(0x292421);
+
+    const smokeOrigin = flameGroup.getWorldPosition(new THREE.Vector3());
+    for (let index = 0; index < 5; index++) {
+      const material = new THREE.SpriteMaterial({
+        map: smokeTexture,
+        color: index % 2 ? 0xb9b5b7 : 0xd2cdd0,
+        transparent: true,
+        opacity: 0.42,
+        depthWrite: false,
+      });
+      const smoke = new THREE.Sprite(material);
+      smoke.position.set(
+        smokeOrigin.x + (Math.random() - 0.5) * 0.08,
+        smokeOrigin.y + Math.random() * 0.06,
+        smokeOrigin.z + (Math.random() - 0.5) * 0.08,
+      );
+      const size = 0.12 + Math.random() * 0.08;
+      smoke.scale.set(size, size * 1.2, 1);
+      scene.add(smoke);
+      smokeParticles.push({
+        sprite: smoke,
+        material,
+        elapsed: 0,
+        duration: 1.5,
+        riseSpeed: 0.22 + Math.random() * 0.12,
+        drift: (Math.random() - 0.5) * 0.1,
+        size,
+      });
+    }
+  }
+
+  function isCandleHit(event) {
+    if (!interactionEnabled) return false;
+    const bounds = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+    pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    return raycaster.intersectObject(candleHitbox, false).length > 0;
+  }
+
+  function animate(now) {
+    requestAnimationFrame(animate);
+    const deltaTime = previousFrameTime === null ? 0 : (now - previousFrameTime) / 1000;
+    previousFrameTime = now;
+    controls.update();
+    if (tierRotationEnabled) {
+      if (TIER_INDEPENDENT) {
+        setTierRotation(tierBottom, tierBottom.group.rotation.y + BOTTOM_SPEED * deltaTime);
+        setTierRotation(tierTop, tierTop.group.rotation.y + TOP_SPEED * deltaTime);
+      } else {
+        cakeGroup.rotation.y += BOTTOM_SPEED * deltaTime;
+      }
+    }
+    if (flameGroup.visible) {
+      flameOpacityElapsed = Math.min(flameOpacityElapsed + deltaTime, flameOpacityDuration);
+      const progress = flameOpacityDuration > 0
+        ? flameOpacityElapsed / flameOpacityDuration
+        : 1;
+      flameOpacity = THREE.MathUtils.lerp(flameOpacityStart, flameOpacityTarget, progress);
+      const flickerX = 1 + Math.sin(now * 0.021) * 0.045 + Math.sin(now * 0.037) * 0.018;
+      const flickerY = 1 + Math.sin(now * 0.017 + 0.8) * 0.055 + Math.sin(now * 0.031) * 0.02;
+      flameSprite.scale.set(
+        0.31 * candleScaleFactor * FLAME_SCALE * flickerX,
+        0.49 * candleScaleFactor * FLAME_SCALE * flickerY,
+        1,
+      );
+      flameMaterial.opacity = flameOpacity;
+      glowMaterial.opacity = 0.5 * flameOpacity;
+      flameLight.intensity = flameOpacity * (2.3 + Math.sin(now * 0.024) * 0.3);
+
+      if (flameOpacityTarget === 0 && progress >= 1) {
+        flameGroup.visible = false;
+        flameLight.intensity = 0;
+      }
+    }
+
+    for (let index = smokeParticles.length - 1; index >= 0; index--) {
+      const particle = smokeParticles[index];
+      particle.elapsed += deltaTime;
+      const progress = Math.min(particle.elapsed / particle.duration, 1);
+      particle.sprite.position.y += particle.riseSpeed * deltaTime;
+      particle.sprite.position.x += particle.drift * deltaTime;
+      particle.material.opacity = 0.42 * (1 - progress);
+      const size = particle.size * (1 + progress * 1.8);
+      particle.sprite.scale.set(size, size * (1.2 + progress * 0.5), 1);
+
+      if (progress >= 1) {
+        scene.remove(particle.sprite);
+        particle.material.dispose();
+        smokeParticles.splice(index, 1);
+      }
+    }
+    renderer.render(scene, camera);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(animate);
+
+  return {
+    canvas: renderer.domElement,
+    resize,
+    projectCakeCenter,
+    lightCandle,
+    extinguishCandle,
+    isCandleHit,
+    startSplit,
+    setOpacity: setCakeOpacity,
+    rejoin,
+  };
+}
+
+function formatBirthDateInput(value) {
+  const digits = value.replace(/\D/g, "").slice(0, 8);
+  enteredPass = digits;
+
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+function updateBirthDateInput(value) {
+  clearTimeout(passCheckTimeout);
+  clearTimeout(passResetTimeout);
+  passCheckTimeout = null;
+  passResetTimeout = null;
+  birthDateInput.value = formatBirthDateInput(value);
+  passMessage.textContent = "";
+
+  if (enteredPass.length === 8) {
+    passCheckTimeout = setTimeout(() => {
+      passCheckTimeout = null;
+      checkPass();
+    }, 250);
+  }
+}
+
+function isValidBirthDate(digits) {
+  if (digits.length !== 8) return false;
+  const day = Number(digits.slice(0, 2));
+  const month = Number(digits.slice(2, 4));
+  const year = Number(digits.slice(4, 8));
+  if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+  return day <= new Date(Date.UTC(year, month, 0)).getUTCDate();
+}
+
+function checkPass() {
+  clearTimeout(passCheckTimeout);
+  passCheckTimeout = null;
+  if (enteredPass.length !== 8) return;
+  const expectedDigits = BIRTH_DATE.replace(/\D/g, "");
+
+  if (isValidBirthDate(enteredPass) && enteredPass === expectedDigits) {
+    passwordScreen.style.opacity = "0";
+    passwordScreen.style.visibility = "hidden";
+    setTimeout(() => {
+      passwordScreen.style.display = "none";
+      mainExperience.style.display = "block";
+      cakeScene.resize();
+      updateInstruction("Nhấn vào bánh để thắp nến");
+    }, 500);
+  } else {
+    birthDateInput.classList.add("shake-content");
+    passMessage.textContent = "Sai rồi, nhập ngày sinh dạng DD/MM/YYYY nha";
+    passResetTimeout = setTimeout(() => {
+      birthDateInput.classList.remove("shake-content");
+      birthDateInput.value = "";
+      enteredPass = "";
+      passResetTimeout = null;
+    }, 500);
+  }
+}
+
+birthDateInput.addEventListener("input", () => {
+  updateBirthDateInput(birthDateInput.value);
+});
+
+birthDateInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") checkPass();
+  if (event.key === "Backspace") {
+    const cursor = birthDateInput.selectionStart;
+    if (cursor > 0 && birthDateInput.value[cursor - 1] === "/") {
+      const digitsBeforeCursor = birthDateInput.value.slice(0, cursor - 1).replace(/\D/g, "");
+      const digitsAfterCursor = birthDateInput.value.slice(cursor).replace(/\D/g, "");
+      event.preventDefault();
+      updateBirthDateInput(digitsBeforeCursor.slice(0, -1) + digitsAfterCursor);
+      birthDateInput.setSelectionRange(cursor - 2, cursor - 2);
+    }
+  }
+});
+
+keys.forEach((key) => {
+  key.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    popSound.currentTime = 0;
+    popSound.play().catch((e) => console.log("Pop sound deferred"));
+
+    if (bgMusic.paused) {
+      bgMusic.play().catch((e) => console.log("Music waiting for interaction"));
+    }
+
+    if (enteredPass.length < 8) {
+      updateBirthDateInput(enteredPass + key.getAttribute("data-value"));
+    }
+  });
+});
+
+deleteKey.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  popSound.currentTime = 0;
+  popSound.play().catch((e) => console.log("Pop sound deferred"));
+
+  if (enteredPass.length > 0) {
+    updateBirthDateInput(enteredPass.slice(0, -1));
+  }
+});
+
+const instruction = document.getElementById("instruction-text");
+const popSound = document.getElementById("pop-sound");
+const candleSound = document.getElementById("candle-sound");
+const fireworkSound = document.getElementById("firework-sound");
+const bgMusic = document.getElementById("bg-music");
+
+let state = "initial";
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("key")) return;
+
+  popSound.currentTime = 0;
+  popSound.play().catch((e) => console.log("Audio play deferred"));
+});
+
+function updateInstruction(text) {
+  if (!instruction) return;
+  instruction.classList.remove("bounce-up");
+  void instruction.offsetWidth;
+
+  instruction.innerText = text;
+  instruction.classList.add("bounce-up");
+}
+
+cake.addEventListener("click", (e) => {
+  if (state === "initial") {
+    cakeScene.lightCandle();
+    updateInstruction("Nhấn vào nến để thổi nến");
+    state = "lit";
+  }
+});
+
+const balloons = [
+  "asset/balloon/balloon (1).png",
+  "asset/balloon/balloon (2).png",
+  "asset/balloon/balloon (3).png",
+  "asset/balloon/balloon (4).png",
+];
+const emojis = [
+  "❤️",
+  "🎂",
+  "🥰",
+  "💗",
+  "✨",
+  "🎉",
+  "🎁",
+  "🎈",
+  "💖",
+  "⭐",
+  "🌈",
+  "🍭",
+];
+const container = document.getElementById("floating-elements");
+let balloonSpawnCount = 0;
+
+function openPhotoBalloon(balloon) {
+  const overlay = document.createElement("div");
+  const enlargedBalloon = document.createElement("div");
+  const photo = document.createElement("img");
+
+  overlay.className = "photo-balloon-overlay";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  enlargedBalloon.className = "photo-balloon-expanded";
+  enlargedBalloon.style.backgroundImage = balloon.style.backgroundImage;
+  photo.src = balloon.querySelector(".photo-balloon-image").src;
+  photo.alt = "Ảnh người được chúc mừng sinh nhật";
+  photo.className = "photo-balloon-image";
+
+  enlargedBalloon.appendChild(photo);
+  overlay.appendChild(enlargedBalloon);
+  overlay.addEventListener("click", (event) => {
+    event.stopPropagation();
+    overlay.remove();
+  });
+  document.body.appendChild(overlay);
+}
+
+function spawnCelebration() {
+  const burstCount = Math.floor(Math.random() * 2) + 1;
+
+  for (let i = 0; i < burstCount; i++) {
+    const isBalloon = Math.random() > 0.4;
+
+    if (isBalloon) {
+      balloonSpawnCount++;
+      const isPhotoBalloon = balloonSpawnCount % 5 === 0;
+      const balloon = document.createElement(isPhotoBalloon ? "div" : "img");
+      const frame = balloons[Math.floor(Math.random() * balloons.length)];
+      balloon.className = isPhotoBalloon
+        ? "celebration-item photo-balloon"
+        : "celebration-item";
+
+      if (isPhotoBalloon) {
+        balloon.style.backgroundImage = `url("${frame}")`;
+        balloon.style.width = "110px";
+        balloon.style.height = "150px";
+
+        const photo = document.createElement("img");
+        photo.src = PHOTO_BALLOON_IMAGE;
+        photo.alt = "Ảnh người được chúc mừng sinh nhật";
+        photo.className = "photo-balloon-image";
+        balloon.appendChild(photo);
+        balloon.setAttribute("role", "button");
+        balloon.setAttribute("tabindex", "0");
+        balloon.setAttribute("aria-label", "Phóng to ảnh sinh nhật");
+        balloon.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openPhotoBalloon(balloon);
+        });
+        balloon.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPhotoBalloon(balloon);
+          }
+        });
+      } else {
+        balloon.src = frame;
+        balloon.style.width = Math.random() * 60 + 40 + "px";
+      }
+
+      balloon.style.left = Math.random() * 90 + "vw";
+      balloon.style.animationDuration = Math.random() * 4 + 6 + "s";
+      balloon.style.animationDelay = Math.random() * 2 + "s";
+      container.appendChild(balloon);
+
+      setTimeout(() => balloon.remove(), 10000);
+    } else {
+      const emoji = document.createElement("div");
+      emoji.className = "floating-emoji";
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 95 + "vw";
+      emoji.style.fontSize = Math.random() * 1.5 + 1.5 + "rem";
+      emoji.style.animationDuration = Math.random() * 3 + 5 + "s";
+      emoji.style.animationDelay = Math.random() * 1 + "s";
+      container.appendChild(emoji);
+
+      setTimeout(() => emoji.remove(), 8000);
+    }
+  }
+}
+
+cakeScene.canvas.addEventListener("click", (e) => {
+  if (state !== "lit" || !cakeScene.isCandleHit(e)) return;
+  e.stopPropagation();
+  candleSound.play().catch((e) => console.log("Candle sound deferred"));
+  cakeScene.extinguishCandle();
+  updateInstruction("✨ HAPPY BIRTHDAY! ✨");
+  state = "blown";
+
+  for (let i = 0; i < 5; i++) {
+    setTimeout(spawnCelebration, i * 200);
+  }
+  setInterval(spawnCelebration, 400);
+  cakeScene.startSplit(
+    () => fireBurst(),
+    (projectedCenter) => popLetterFromCake(projectedCenter),
+  );
+});
+
+const letterContainer = document.getElementById("letter-container");
+const modal = document.getElementById("message-modal");
+const letterPaper = modal.querySelector(".letter-paper");
+const fireworksContainer = document.getElementById("fireworks-container");
+const closeBtn = document.getElementById("close-modal");
+const slideshowViewport = document.querySelector(".slideshow-viewport");
+const slideshowDotsContainer = document.querySelector(".slideshow-dots");
+const slideshowImages = [];
+const slideshowDots = [];
+let slideshowInterval = null;
+let currentSlide = 0;
+let letterHasPopped = false;
+let autoOpenLetterTimeout = null;
+
+window.addEventListener("resize", () => {
+  if (!letterHasPopped) return;
+  const center = cakeScene.projectCakeCenter();
+  const endY = Math.min(Math.max(center.y - 58, 112), window.innerHeight - 120);
+  letterContainer.style.left = `${window.innerWidth / 2}px`;
+  letterContainer.style.top = `${endY}px`;
+});
+
+function createLetterPopEffects(center) {
+  const effects = document.createElement("div");
+  const glow = document.createElement("div");
+  effects.className = "letter-pop-effects";
+  effects.setAttribute("aria-hidden", "true");
+  glow.className = "letter-pop-glow";
+  glow.style.left = `${center.x}px`;
+  glow.style.top = `${center.y}px`;
+  effects.appendChild(glow);
+
+  for (let index = 0; index < 20; index++) {
+    const angle = (Math.PI * 2 * index) / 20 + Math.random() * 0.18;
+    const distance = 35 + Math.random() * 75;
+    const sparkle = document.createElement("span");
+    sparkle.className = "letter-pop-sparkle";
+    sparkle.style.left = `${center.x}px`;
+    sparkle.style.top = `${center.y}px`;
+    sparkle.style.setProperty("--sparkle-x", `${Math.cos(angle) * distance}px`);
+    sparkle.style.setProperty("--sparkle-y", `${Math.sin(angle) * distance}px`);
+    sparkle.style.setProperty(
+      "--sparkle-color",
+      index % 2 === 0 ? "#ffd36e" : "#ff8fb9",
+    );
+    effects.appendChild(sparkle);
+  }
+
+  document.body.appendChild(effects);
+  setTimeout(() => effects.remove(), 1100);
+}
+
+function popLetterFromCake(center) {
+  const startX = Math.min(Math.max(center.x, 80), window.innerWidth - 80);
+  const startY = Math.min(Math.max(center.y, 100), window.innerHeight - 100);
+  const endX = window.innerWidth / 2;
+  const endY = Math.min(Math.max(center.y - 58, 112), window.innerHeight - 120);
+  const startedAt = performance.now();
+
+  letterContainer.classList.remove("split-reveal", "show-text");
+  letterContainer.classList.add("split-pop", "show");
+  letterContainer.style.position = "fixed";
+  letterContainer.style.zIndex = "120";
+  letterContainer.style.left = `${startX}px`;
+  letterContainer.style.top = `${startY}px`;
+  letterContainer.style.transformOrigin = "center center";
+  letterContainer.style.transform = "translate(-50%, -50%) scale(0) rotate(-15deg)";
+  letterContainer.style.opacity = "0";
+  letterContainer.style.pointerEvents = "none";
+  createLetterPopEffects(center);
+
+  function easeBackOut(progress) {
+    const shifted = progress - 1;
+    return 1 + 2.70158 * shifted ** 3 + 1.70158 * shifted ** 2;
+  }
+
+  function animatePop(now) {
+    const progress = Math.min((now - startedAt) / (LETTER_POP_DURATION * 1000), 1);
+    const eased = easeBackOut(progress);
+    const x = startX + (endX - startX) * eased + Math.sin(progress * Math.PI) * 16;
+    const y = startY + (endY - startY) * eased - Math.sin(progress * Math.PI) * 28;
+    let scale;
+
+    if (progress < 0.78) {
+      scale = 1.15 * easeBackOut(progress / 0.78);
+    } else {
+      const settle = (progress - 0.78) / 0.22;
+      scale = 1.15 - 0.15 * settle;
+    }
+
+    const rotation = -15 * (1 - progress) + 3 * Math.sin(progress * Math.PI);
+    letterContainer.style.left = `${x}px`;
+    letterContainer.style.top = `${y}px`;
+    letterContainer.style.opacity = String(Math.min(progress / 0.18, 1));
+    letterContainer.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animatePop);
+    } else {
+      letterHasPopped = true;
+      letterContainer.style.left = `${endX}px`;
+      letterContainer.style.top = `${endY}px`;
+      letterContainer.style.opacity = "1";
+      letterContainer.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
+      letterContainer.style.pointerEvents = "auto";
+      letterContainer.classList.remove("split-pop");
+      letterContainer.classList.add("show-text");
+      if (AUTO_OPEN_LETTER) {
+        autoOpenLetterTimeout = setTimeout(() => {
+          autoOpenLetterTimeout = null;
+          openLetterModal();
+        }, 1000);
+      }
+    }
+  }
+
+  requestAnimationFrame(animatePop);
+}
+
+LETTER_PHOTOS.forEach((path, index) => {
+  const image = document.createElement("img");
+  image.src = path;
+  image.alt = `Ảnh kỷ niệm ${index + 1}`;
+  image.className = `slideshow-image${index === 0 ? " active" : ""}`;
+  slideshowViewport.appendChild(image);
+  slideshowImages.push(image);
+
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = `slideshow-dot${index === 0 ? " active" : ""}`;
+  dot.setAttribute("aria-label", `Hiện ảnh ${index + 1}`);
+  dot.setAttribute("aria-pressed", String(index === 0));
+  slideshowDotsContainer.appendChild(dot);
+  slideshowDots.push(dot);
+});
+
+function showSlide(index) {
+  currentSlide = index;
+  slideshowImages.forEach((image, slideIndex) => {
+    image.classList.toggle("active", slideIndex === index);
+  });
+  slideshowDots.forEach((dot, slideIndex) => {
+    const isActive = slideIndex === index;
+    dot.classList.toggle("active", isActive);
+    dot.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function stopSlideshow() {
+  clearInterval(slideshowInterval);
+  slideshowInterval = null;
+}
+
+function startSlideshow() {
+  if (slideshowImages.length < 2) return;
+  stopSlideshow();
+  slideshowInterval = setInterval(() => {
+    showSlide((currentSlide + 1) % slideshowImages.length);
+  }, 3000);
+}
+
+slideshowDots.forEach((dot, index) => {
+  dot.addEventListener("click", () => {
+    showSlide(index);
+    startSlideshow();
+  });
+});
+
+function createFirework() {
+  const colors = [
+    "#ff47a1",
+    "#ffc107",
+    "#00bcd4",
+    "#4caf50",
+    "#ffffff",
+    "#e91e63",
+    "#9c27b0",
+    "#ff5722",
+    "#00ff00",
+    "#ffff00",
+    "#00ffff",
+  ];
+  const x = Math.random() * 100;
+  const targetHeight = Math.random() * 50 + 30;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const rocket = document.createElement("div");
+  rocket.className = "rocket";
+  rocket.style.left = x + "%";
+  rocket.style.setProperty("--target-height", targetHeight + "vh");
+  rocket.style.backgroundColor = color;
+  rocket.style.boxShadow = `0 0 10px ${color}`;
+  fireworksContainer.appendChild(rocket);
+
+  setTimeout(() => {
+    rocket.remove();
+
+    const sound = fireworkSound.cloneNode();
+    sound.volume = 0.7;
+    sound.currentTime = 0;
+    sound.play().catch((e) => console.log("Firework sound deferred"));
+
+    setTimeout(() => {
+      sound.pause();
+      sound.remove();
+    }, 2000);
+
+    const particleCount = 50;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      particle.style.backgroundColor = color;
+      particle.style.left = x + "%";
+      particle.style.bottom = targetHeight + "vh";
+      particle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+
+      const angle = ((Math.PI * 2) / particleCount) * i;
+      const velocity = Math.random() * 200 + 100;
+      const dx = Math.cos(angle) * velocity + "px";
+      const dy = Math.sin(angle) * velocity + "px";
+
+      particle.style.setProperty("--dx", dx);
+      particle.style.setProperty("--dy", dy);
+
+      fireworksContainer.appendChild(particle);
+      setTimeout(() => particle.remove(), 1200);
+    }
+  }, 1000);
+}
+
+let fireworkInterval;
+
+function openLetterModal() {
+  if (autoOpenLetterTimeout !== null) {
+    clearTimeout(autoOpenLetterTimeout);
+    autoOpenLetterTimeout = null;
+  }
+  if (modal.classList.contains("show") || letterOpening) return;
+  letterOpening = true;
+  const envelopeRect = letterContainer.getBoundingClientRect();
+  const originX = envelopeRect.left + envelopeRect.width / 2;
+  const originY = envelopeRect.top + envelopeRect.height / 2;
+  const paperLeft = (window.innerWidth - letterPaper.offsetWidth) / 2;
+  const paperTop = (window.innerHeight - letterPaper.offsetHeight) / 2;
+  modal.style.setProperty("--letter-origin-x", `${originX - paperLeft}px`);
+  modal.style.setProperty("--letter-origin-y", `${originY - paperTop}px`);
+  letterContainer.classList.add("opening");
+
+  setTimeout(() => {
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+    cakeScene.setOpacity(0.35);
+    startSlideshow();
+    fireBurst();
+    fireworkInterval = setInterval(fireBurst, 2500);
+    closeBtn.focus({ preventScroll: true });
+
+    setTimeout(() => letterContainer.classList.add("opening-complete"), 280);
+    setTimeout(() => {
+      letterOpening = false;
+    }, 640);
+  }, 200);
+}
+
+function closeLetterModal() {
+  if (!modal.classList.contains("show")) return;
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
+  clearInterval(fireworkInterval);
+  stopSlideshow();
+  cakeScene.setOpacity(1);
+  if (REJOIN_ON_CLOSE) cakeScene.rejoin();
+}
+
+function fireBurst() {
+  const count = Math.floor(Math.random() * 3) + 2;
+  for (let i = 0; i < count; i++) {
+    setTimeout(createFirework, i * 600);
+  }
+}
+
+let letterOpening = false;
+
+function handleLetterOpen(event) {
+  event.stopPropagation();
+  openLetterModal();
+}
+
+letterContainer.addEventListener("click", handleLetterOpen);
+letterContainer.addEventListener("touchstart", (event) => {
+  if (event.cancelable) event.preventDefault();
+  handleLetterOpen(event);
+}, { passive: false });
+
+letterContainer.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  openLetterModal();
+});
+
+closeBtn.addEventListener("click", () => {
+  closeLetterModal();
+});
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    closeLetterModal();
+  }
+});
+
+    </script>
+  </body>
+</html>
